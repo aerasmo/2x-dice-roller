@@ -11,15 +11,18 @@ let diceToClass = {
   6: 'fa-dice-six',
 }
 
-
 class Dice extends Component {
   render() {
-    let { spots } = this.props
-    let className_ = `fas + ${diceToClass.[spots]}`
+    let { spots, rolling } = this.props
+    let className_ = `fas + ${diceToClass[spots]} `
+
+    if (rolling) {
+      className_ = className_.concat(' shaking')
+    }
 
     return (
       <div className="Dice">
-        <i className={className_}></i>
+        <i className={className_ }></i>
       </div>
      );
   }

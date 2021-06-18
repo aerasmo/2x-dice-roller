@@ -12,25 +12,51 @@ class RollDice extends Component {
     this.state = {
       dice1: randomDice(),
       dice2: randomDice(),
+      rolling: false,
     }
-    this.rollDice = this.rollDice.bind(this);
+    this.roll = this.roll.bind(this);
   }
-  rollDice() {
+  roll() {
     console.log('Rolling Dice...')
     this.setState( {
-      dice1: randomDice(),
-      dice2: randomDice(),
+      rolling: true
     })
+
+    let timesRun = 0;
+    let limit = randomDice() * 2 + 2
+    let interval = setInterval(() =>{
+        timesRun += 1;
+        this.setState( {
+          dice1: randomDice(),
+          dice2: randomDice(),
+          rolling: true
+        })
+        
+        if(timesRun === limit){
+            this.setState( {
+              rolling: false
+            })
+            clearInterval(interval);
+            
+        }
+        //do whatever here..
+    }, 70); 
   }
+
   render() {
     let { dice1, dice2} = this.state
     return (
       <div className="RollDice">
         <div className="dice-area">
-          <Dice spots={dice1} />
-          <Dice spots={dice2} />
+          <Dice spots={dice1} rolling={this.state.rolling}/>
+          <Dice spots={dice2} rolling={this.state.rolling}/>
         </div>
-        <button onClick={this.rollDice}> Roll Dice! </button>
+        <button onClick={this.roll} disabled={this.state.rolling}> 
+          {this.state.rolling == false 
+            ? "Roll Dice!"
+            : "Rolling..."
+          }
+        </button>
       </div>
     );
   }
