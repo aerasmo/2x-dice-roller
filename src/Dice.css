@@ -1,0 +1,8 @@
+.Dice {
+  display: inline-block;
+  margin: 2rem;
+}
+
+.Dice i{
+  font-size: 10rem;
+}
